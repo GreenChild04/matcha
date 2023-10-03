@@ -15,10 +15,10 @@ flexar::lexer! {
         RBrace => "}";
 
         // Literals
-        Int(val: u64) => val;
+        Int(val: u128) => val;
         Float(val: f64) => val;
         Ident(val: String) => val;
-        Str(val: String) => val;
+        Str(val: String) => format!("\"{val}\"");
 
         // Keywords
         Let => "let";
