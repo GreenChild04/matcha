@@ -8,4 +8,8 @@ flexar::compiler_error! {
     (SY003) "expected atom": ((1) "expected atom, found `", "`.");
     /// Occurs when the syntax expected an binop but didn't find one
     (SY004) "expected binop": ((1) "expected binop, found `", "`.");
+    /// Occurs when a statement is not ended by a semi-colon
+    (SY005) "expected `;` to end statement": ((1) "expected `;`, found `", "`.");
+    /// Occurs when the syntax expected a statement but didn't find one
+    (SY006) "expected statement": ((1) "expected statement, found `", "`.");
 }

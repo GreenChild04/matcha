@@ -1,6 +1,6 @@
 use flexar::{token_node::Node, Flext, token_node::TokenToString};
 use crate::lang::{Token, errors::SyntaxError};
-use super::{Expr, Atom};
+use super::Atom;
 
 #[derive(Debug, Clone)]
 pub enum BinOp {

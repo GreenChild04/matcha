@@ -1,6 +1,5 @@
 use flexar::{token_node::Node, Flext, token_node::TokenToString};
 use crate::lang::{Token, errors::SyntaxError};
-
 use super::BinOp;
 
 #[derive(Debug, Clone)]

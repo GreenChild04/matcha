@@ -23,6 +23,7 @@ flexar::lexer! {
         // Keywords
         Let => "let";
         Mut => "mut";
+        Return => "return";
         
         // Symbols
         Plus => "+";
@@ -137,6 +138,7 @@ flexar::lexer! {
 
         if (ident == "let") { done Let(); };
         if (ident == "mut") { done Mut(); };
+        if (ident == "return") { done Return(); };
 
         done Ident(ident);
     };
