@@ -40,6 +40,8 @@ flexar::lexer! {
         LTE => "<=";
         Arrow => "=>";
         Comma => ",";
+        Not => "!";
+        NE => "!=";
     }
 
     // Brackets
@@ -55,13 +57,12 @@ flexar::lexer! {
     Minus: '-';
     Mul: *;
     Div: /;
-    EQ: =;
     Semi: ;;
     Colon: :;
     Dot: .;
     Comma: ,;
 
-    // `=` and comparisons
+    // Multi
     EE: (= =);
     Arrow: (= >);
     EQ: =;
@@ -69,6 +70,8 @@ flexar::lexer! {
     GT: >;
     LTE: (< =);
     LT: <;
+    NE: (! =);
+    Not: !;
 
     [" \n\t"] >> ({ lext.advance(); lext = lext.spawn(); continue 'cycle; });
      

@@ -1,10 +1,10 @@
 use std::fs;
 use flexar::{lext::Lext, parxt::Parxt};
-use matcha::lang::{lexer::Token, nodes::Literal};
+use matcha::lang::{lexer::Token, nodes::Expr};
 
 fn main() {
     let tokens = Token::tokenize(Lext::new("example.mt".into(), &fs::read_to_string("example.mt").unwrap()));
-    
+
     println!("Tokens: {:?}", 
         tokens
             .iter()
@@ -12,9 +12,9 @@ fn main() {
             .collect::<Box<_>>()
     );
 
-    let nodes = Literal::parse(&mut Parxt::new(&tokens));
+    let nodes = Expr::parse(&mut Parxt::new(&tokens));
     match nodes {
-        Ok(x) => println!("\nNodes: {}", x),
+        Ok(x) => println!("\nNodes: {:}", x),
         Err((_, x)) => x.throw(),
     }
 }
