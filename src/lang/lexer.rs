@@ -19,6 +19,7 @@ flexar::lexer! {
         Float(val: f64) => val;
         Ident(val: String) => val;
         Str(val: String) => format!("\"{val}\"");
+        StrTplt(_val: Box<[String]>) => "<string template>";
 
         // Keywords
         Let => "let";
@@ -89,38 +90,53 @@ flexar::lexer! {
 
     '"' child {
         { child.advance() }
-        set string { String::new() };
+        set string { vec![String::new()] };
+        set idx 0;
         rsome (current, 'string) {
-            { if current == '\n' { break 'string; } };
-            ck (current, '"') {
+            { if current == '\n' { break 'string; } }; // not a multi-line string
+            ck (current, '"') { // if the string ends
                 advance:();
-                done Str(string);
+                if (idx == 0) { // if the string isn't a template
+                    done Str(std::mem::replace(&mut string[0], String::new()));
+                };
+                done StrTplt(string.into_boxed_slice()); // if it is a template
             };
             ck (current, '\\') { // Escape characters
                 advance: current;
                 ck (current, 'n') {
                     advance:();
-                    { string.push('\n') };
+                    { string[idx].push('\n') };
                     { continue 'string };
                 };
                 ck (current, 't') {
                     advance:();
-                    { string.push('\t') };
+                    { string[idx].push('\t') };
                     { continue 'string };
                 };
                 ck (current, '\\') {
                     advance:();
-                    { string.push('\\') };
+                    { string[idx].push('\\') };
                     { continue 'string };
                 };
                 ck (current, '"') {
                     advance:();
-                    { string.push('"') };
+                    { string[idx].push('"') };
+                    { continue 'string };
+                };
+                ck (current, '|') {
+                    advance:();
+                    { string[idx].push('|') };
                     { continue 'string };
                 };
                 { return compiler_error!((LX003, child.spawn().position()) current).throw() };
             };
-            { string.push(current) };
+            ck (current, '|') { // string templates
+                advance:();
+                { string.push(String::new()) };
+                { idx += 1 };
+                { continue 'string };
+            };
+            { string[idx].push(current) };
         };
         { return compiler_error!((LX001, child.spawn().position()) current).throw() };
     };
