@@ -1,16 +1,16 @@
 use flexar::{token_node::Node, Flext, token_node::TokenToString};
 use crate::lang::{Token, errors::SyntaxError};
-use super::Atom;
+use super::Call;
 
 #[derive(Debug, Clone)]
 pub enum BinOp {
     Add(Box<Node<BinOp>>, Box<Node<BinOp>>),
     Sub(Box<Node<BinOp>>, Box<Node<BinOp>>),
-    Mul(Node<Atom>, Box<Node<BinOp>>),
-    Div(Node<Atom>, Box<Node<BinOp>>),
+    Mul(Node<Call>, Box<Node<BinOp>>),
+    Div(Node<Call>, Box<Node<BinOp>>),
     EE(Box<Node<BinOp>>, Box<Node<BinOp>>),
     NE(Box<Node<BinOp>>, Box<Node<BinOp>>),
-    Atom(Node<Atom>),
+    Atom(Node<Call>),
 }
 
 flexar::parser! {
@@ -30,7 +30,7 @@ flexar::parser! {
     } else Err((SY004, parxt.position()) parxt.current_token());
 
     mul_div {
-        [left: Atom::parse] => {
+        [left: Call::parse] => {
             (Token::Mul), [right: BinOp::parse] => (Mul(left, Box::new(right)));
             (Token::Div), [right: BinOp::parse] => (Div(left, Box::new(right)));
         } (else Ok(Self::Atom(left)))

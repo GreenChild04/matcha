@@ -12,4 +12,6 @@ flexar::compiler_error! {
     (SY005) "expected `;` to end statement": ((1) "expected `;`, found `", "`.");
     /// Occurs when the syntax expected a statement but didn't find one
     (SY006) "expected statement": ((1) "expected statement, found `", "`.");
+    /// Occurs when the syntax expected a function call but didn't find one
+    (SY007) "expected call": ((1) "expected call, found `", "`.");
 }

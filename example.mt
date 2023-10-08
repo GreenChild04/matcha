@@ -1,3 +1,4 @@
+"result of 3 is |" func 3
 let mut a: i32 = 23;
 printf("hello |, who is | years old!"("Dave", 23));
 1 + 2 == 9 / 3;

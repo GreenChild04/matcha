@@ -97,7 +97,7 @@ flexar::lexer! {
             ck (current, '"') { // if the string ends
                 advance:();
                 if (idx == 0) { // if the string isn't a template
-                    done Str(std::mem::replace(&mut string[0], String::new()));
+                    done Str(std::mem::take(&mut string[0]));
                 };
                 done StrTplt(string.into_boxed_slice()); // if it is a template
             };
