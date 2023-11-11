@@ -1,0 +1,19 @@
+[[language]]
+name = "rust"
+auto-format = false
+
+[[language]]
+name = "toml"
+
+[[language]]
+name = "onefig"
+scope = "source.nf"
+file-types = ["nf"]
+comment-token = "//"
+roots = []
+indent = { tab-width = 4, unit = "    " }
+
+# turn back on when you update to helix v23.5
+# [language.config]
+# cachePriming.enable = false
+# diagnostics.experimental.enable = true
